@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{7BF6A01B-A00A-4986-9E23-1A0E48CCAD83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9B3CECD8-1FAD-4C69-A7E2-2A884BEFE5FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{64F4033F-1384-4A59-A993-86994268AE88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{65C898E8-AAE1-460A-B050-DF2965C35AA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookClub.Domains", "BookClub.Domains\BookClub.Domains.csproj", "{6FF347BF-19C5-4C02-ACB9-F4ED906922CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookClub.Application", "BookClub.Application\BookClub.Application.csproj", "{D5B137A1-9649-4763-B5E6-7CE40AC64A40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookClub.Persistence", "BookClub.Persistence\BookClub.Persistence.csproj", "{6A494FF2-489F-479E-92CB-89BE3041578E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookClub.WebApi", "BookClub.WebApi\BookClub.WebApi.csproj", "{07E6D917-BBFC-4C83-A37D-FA10AE498B5D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FF347BF-19C5-4C02-ACB9-F4ED906922CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FF347BF-19C5-4C02-ACB9-F4ED906922CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FF347BF-19C5-4C02-ACB9-F4ED906922CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FF347BF-19C5-4C02-ACB9-F4ED906922CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B137A1-9649-4763-B5E6-7CE40AC64A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B137A1-9649-4763-B5E6-7CE40AC64A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B137A1-9649-4763-B5E6-7CE40AC64A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B137A1-9649-4763-B5E6-7CE40AC64A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A494FF2-489F-479E-92CB-89BE3041578E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A494FF2-489F-479E-92CB-89BE3041578E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A494FF2-489F-479E-92CB-89BE3041578E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A494FF2-489F-479E-92CB-89BE3041578E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07E6D917-BBFC-4C83-A37D-FA10AE498B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E6D917-BBFC-4C83-A37D-FA10AE498B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E6D917-BBFC-4C83-A37D-FA10AE498B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E6D917-BBFC-4C83-A37D-FA10AE498B5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6FF347BF-19C5-4C02-ACB9-F4ED906922CE} = {7BF6A01B-A00A-4986-9E23-1A0E48CCAD83}
+		{D5B137A1-9649-4763-B5E6-7CE40AC64A40} = {7BF6A01B-A00A-4986-9E23-1A0E48CCAD83}
+		{6A494FF2-489F-479E-92CB-89BE3041578E} = {9B3CECD8-1FAD-4C69-A7E2-2A884BEFE5FB}
+		{07E6D917-BBFC-4C83-A37D-FA10AE498B5D} = {64F4033F-1384-4A59-A993-86994268AE88}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B95747F-DDC1-4B0E-838D-A81989E13776}
+	EndGlobalSection
+EndGlobal
