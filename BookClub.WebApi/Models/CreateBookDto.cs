@@ -23,15 +23,16 @@ namespace BookClub.WebApi.Models
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateBookDto, CreateBookCommand>()
-                //.ForMember(bookCommand => bookCommand.Cover, opt => opt.MapFrom(bookDto => bookDto.Cover))
-                //.ForMember(bookCommand => bookCommand.Title, opt => opt.MapFrom(bookDto => bookDto.Title))
-                //.ForMember(bookCommand => bookCommand.Author, opt => opt.MapFrom(bookDto => bookDto.Author))
-                //.ForMember(bookCommand => bookCommand.Pages, opt => opt.MapFrom(bookDto => bookDto.Pages))
-                ////.ForMember(bookItem => bookItem.Tags, opt => opt.Ignore()) 
-                //.ForMember(bookCommand => bookCommand.Tags, opt => opt.ConvertUsing<ArrayStringConverter, string[]>())
-                //.ForMember(bookCommand => bookCommand.Rating, opt => opt.MapFrom(bookDto => bookDto.Rating))
-                //.ForMember(bookCommand => bookCommand.Description, opt => opt.MapFrom(bookDto => bookDto.Description));  
-                .ConvertUsing<FullConverter>();
+                .ConvertUsing(new FullConverter());
+            //.ForMember(bookCommand => bookCommand.Cover, opt => opt.MapFrom(bookDto => bookDto.Cover))
+            //.ForMember(bookCommand => bookCommand.Title, opt => opt.MapFrom(bookDto => bookDto.Title))
+            //.ForMember(bookCommand => bookCommand.Author, opt => opt.MapFrom(bookDto => bookDto.Author))
+            //.ForMember(bookCommand => bookCommand.Pages, opt => opt.MapFrom(bookDto => bookDto.Pages))
+            ////.ForMember(bookItem => bookItem.Tags, opt => opt.Ignore()) 
+            //.ForMember(bookCommand => bookCommand.Tags, opt => opt.ConvertUsing<ArrayStringConverter, string[]>())
+            //.ForMember(bookCommand => bookCommand.Rating, opt => opt.MapFrom(bookDto => bookDto.Rating))
+            //.ForMember(bookCommand => bookCommand.Description, opt => opt.MapFrom(bookDto => bookDto.Description));  
+
         }
     }
 
@@ -39,16 +40,18 @@ namespace BookClub.WebApi.Models
     {
         public CreateBookCommand Convert(CreateBookDto bookDto, CreateBookCommand bookCommand, ResolutionContext context)
         {
-            bookCommand.Cover = bookDto.Cover;
-            bookCommand.Title = bookDto.Title;
-            bookCommand.Author = bookDto.Author;
-            bookCommand.Pages = bookDto.Pages;
+            bookCommand = new CreateBookCommand
+            {
+                Cover = bookDto.Cover,
+                Title = bookDto.Title,
+                Author = bookDto.Author,
+                Pages = bookDto.Pages,
+                Tags = new string[bookDto.Tags.Length],
+                Rating = bookDto.Rating,
+                Description = bookDto.Description
+            };
 
-            bookCommand.Tags = new string[bookDto.Tags.Length];
             Array.Copy(bookDto.Tags, bookCommand.Tags, bookDto.Tags.Length);
-
-            bookCommand.Rating = bookDto.Rating;
-            bookCommand.Description = bookDto.Description;
 
             return bookCommand;
         }
