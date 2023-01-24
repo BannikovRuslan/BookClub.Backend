@@ -22,7 +22,7 @@ namespace BookClub.WebApi
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
-                    var context = serviceProvider.GetRequiredService<BooksDbContext>();
+                    var context = serviceProvider.GetRequiredService<BookClubDbContext>();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception exception) 
@@ -47,7 +47,7 @@ namespace BookClub.WebApi
         /// <returns>Инициализатор приложения.</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                //.UseUnityServiceProvider(Container)
+                .UseUnityServiceProvider(Container)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

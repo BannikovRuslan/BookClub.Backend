@@ -10,6 +10,7 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
     <PackageReference Include="NewPlatform.Flexberry.ORM" Version="6.0.0" />
+    <PackageReference Include="NewPlatform.Flexberry.ORM.PostgresDataService" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,39 +1,44 @@
-﻿using BookClub.Application.Interfaces;
+﻿using AutoMapper;
+using BookClub.Application.Interfaces;
 using BookClub.Domains;
+using ICSSoft.STORMNET.Business;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace BookClub.Application.Books.Commands
 {
     // Обрботчик комманды
-    public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
+    public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, Book>
     {
         private readonly IBooksDbContext _dbContext;
-        public CreateBookCommandHandler(IBooksDbContext dbContext)
+        private readonly IMapper _mapper;
+        public CreateBookCommandHandler(IBooksDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
-        public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+        public async Task<Book> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            var book = new Book
+            var book = _mapper.Map<Book>(request);
+
+            //await _dbContext.Books.AddAsync(book, cancellationToken);
+            //await _dbContext.SaveChangesAsync(cancellationToken);
+
+            var ds = (SQLDataService)DataServiceProvider.DataService;
+            try
             {
-                Cover= request.Cover,
-                Title = request.Title,
-                Author = request.Author,
-                Pages= request.Pages,
-                Tags= request.Tags,
-                Rating= request.Rating,
-                Description= request.Description,
-            };
+                ds.UpdateObject(book);
+            }
+            catch (Exception)
+            {
 
-            await _dbContext.Books.AddAsync(book, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                throw;
+            }
 
-            return book.Id;
+            book.Id = Guid.Parse(book.__PrimaryKey.ToString());
+            return book;
         }
     }
 }

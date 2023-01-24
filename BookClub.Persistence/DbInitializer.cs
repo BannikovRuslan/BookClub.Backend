@@ -6,7 +6,7 @@ namespace BookClub.Persistence
 {
     public class DbInitializer
     {
-        public static void Initialize(BooksDbContext context) 
+        public static void Initialize(BookClubDbContext context) 
         {
             context.Database.EnsureCreated();
         }

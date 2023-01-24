@@ -15,14 +15,16 @@ namespace BookClub.Persistence
             services, IConfiguration configuration)
         {
             var connectionString = configuration["DefConnStr"];
-            services.AddDbContext<BooksDbContext>(options =>
+            services.AddDbContext<BookClubDbContext>(options =>
             {
                 //options.UseSqlite(connectionString);
                 options.UseNpgsql(connectionString);
             });
 
             services.AddScoped<IBooksDbContext>(provider =>
-                provider.GetService<BooksDbContext>());
+                provider.GetService<BookClubDbContext>());
+            services.AddScoped<ISpeakersDbContext>(provider =>
+                provider.GetService<BookClubDbContext>());
             return services;
         }
 

@@ -8,15 +8,17 @@ using System.Text;
 
 namespace BookClub.Persistence
 {
-    public class BooksDbContext : DbContext, IBooksDbContext
+    public class BookClubDbContext : Microsoft.EntityFrameworkCore.DbContext, IBooksDbContext, ISpeakersDbContext
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<Speaker> Speakers { get; set; }
         
-        public BooksDbContext(DbContextOptions<BooksDbContext> options) : base(options) { }
+        public BookClubDbContext(DbContextOptions<BookClubDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BookConfiguration());
+            modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

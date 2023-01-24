@@ -47,6 +47,7 @@ namespace BookClub.WebApi
             {
                 config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
                 config.AddProfile(new AssemblyMappingProfile(typeof(IBooksDbContext).Assembly));
+                config.AddProfile(new AssemblyMappingProfile(typeof(ISpeakersDbContext).Assembly));
             });
 
             services.AddApplication();
@@ -86,40 +87,40 @@ namespace BookClub.WebApi
         /// Configurate application container.
         /// </summary>
         /// <param name="container">Container to configure.</param>
-        //public void ConfigureContainer(IUnityContainer container)
-        //{
-        //    if (container == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(container));
-        //    }
+        public void ConfigureContainer(IUnityContainer container)
+        {
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
 
-        //    // FYI: сервисы, в т.ч. контроллеры, создаются из дочернего контейнера.
-        //    while (container.Parent != null)
-        //    {
-        //        container = container.Parent;
-        //    }
+            // FYI: сервисы, в т.ч. контроллеры, создаются из дочернего контейнера.
+            while (container.Parent != null)
+            {
+                container = container.Parent;
+            }
 
-        //    // FYI: сервис данных ходит в контейнер UnityFactory.
-        //    container.RegisterInstance(Configuration);
+            // FYI: сервис данных ходит в контейнер UnityFactory.
+            container.RegisterInstance(Configuration);
 
-        //    // RegisterDataObjectFileAccessor(container);
-        //    RegisterORM(container);
-        //}
+            // RegisterDataObjectFileAccessor(container);
+            RegisterORM(container);
+        }
         /// <summary>
         /// Register ORM implementations.
         /// </summary>
         /// <param name="container">Container to register at.</param>
-        //private void RegisterORM(IUnityContainer container)
-        //{
-        //    string connStr = Configuration["DefConnStr"];
-        //    if (string.IsNullOrEmpty(connStr))
-        //    {
-        //        throw new System.Configuration.ConfigurationErrorsException("DefConnStr is not specified in Configuration or enviromnent variables.");
-        //    }
+        private void RegisterORM(IUnityContainer container)
+        {
+            string connStr = Configuration["DefConnStr"];
+            if (string.IsNullOrEmpty(connStr))
+            {
+                throw new System.Configuration.ConfigurationErrorsException("DefConnStr is not specified in Configuration or enviromnent variables.");
+            }
 
-        //    container.RegisterSingleton<ISecurityManager, EmptySecurityManager>();
-        //    container.RegisterSingleton<IDataService, PostgresDataService>(
-        //        Inject.Property(nameof(PostgresDataService.CustomizationString), connStr));
-        //}
+            container.RegisterSingleton<ISecurityManager, EmptySecurityManager>();
+            container.RegisterSingleton<IDataService, PostgresDataService>(
+                Inject.Property(nameof(PostgresDataService.CustomizationString), connStr));
+        }
     }
 }

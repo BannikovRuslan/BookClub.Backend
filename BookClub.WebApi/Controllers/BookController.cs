@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using BookClub.Application.Books.Commands;
 using BookClub.Application.Books.Queries;
+using BookClub.Application.Books.ViewModels;
+using BookClub.Domains;
 using BookClub.WebApi.Models;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookClub.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("books")]
     public class BookController : BaseController
     {
         private readonly IMapper _mapper;
@@ -21,18 +20,22 @@ namespace BookClub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<BookListVm>> GetAll()
         {
+            var searchText = Request.Query["q"].ToString();
+            var tag = Request.Query["tags_like"].ToString();
+            
             var query = new GetBookListQuery
             {
-                Id = 1
+                SearchText = searchText,
+                Tag = tag
             };
 
             var vm = await Mediator.Send(query);
-            return Ok(vm);
+            return Ok(vm.Books);
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookDetailsVm>> Get(int id)
+        public async Task<ActionResult<BookDetailsVm>> Get(Guid id)
         {
             var query = new GetBookDetailsQuery 
             { 
@@ -44,30 +47,30 @@ namespace BookClub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody] CreateBookDto createBookDto)
+        public async Task<ActionResult<Book>> Create([FromBody] CreateBookDto createBookDto)
         {
             var command = _mapper.Map<CreateBookCommand>(createBookDto);
-            var Id = await Mediator.Send(command);
-            return Ok(Id);
+            var book = await Mediator.Send(command);
+            return Ok(book);
         }
 
-        [HttpPut]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> Update([FromBody] UpdateBookDto updateBookDto)
         {
             var command = _mapper.Map<UpdateBookCommand>(updateBookDto);
-            await Mediator.Send(command);
-            return NoContent();
+            var vm = await Mediator.Send(command);
+            return Ok(vm);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var command = new DeleteBookCommand
             {
                 Id = id
             };
-            await Mediator.Send(command);
-            return NoContent();
+            var vm = await Mediator.Send(command);
+            return Ok(vm);
         }
     }
 }

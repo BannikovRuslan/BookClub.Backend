@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using BookClub.Application.Books.ViewModels;
+using MediatR;
+using System;
 
 namespace BookClub.Application.Books.Commands
 {
-    public class DeleteBookCommand : IRequest
+    public class DeleteBookCommand : IRequest<BookIdVm>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }
