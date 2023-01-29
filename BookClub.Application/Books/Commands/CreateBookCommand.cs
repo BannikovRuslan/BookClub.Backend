@@ -10,7 +10,6 @@ namespace BookClub.Application.Books.Commands
     // Минимум для создания книги
     public class CreateBookCommand : IRequest<Book>, IMapWith<Book>
     {
-        public Guid Id { get; set; }
         public string Cover { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }

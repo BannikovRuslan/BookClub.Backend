@@ -14,11 +14,11 @@ namespace BookClub.Domains
     [AccessType(AccessType.none)]
     [View("MeetingE", new string[] {
             "Date as \'Date\'"})]
-    [AssociatedDetailViewAttribute("MeetingE", "Presentation", "PresentationE", true, "", "Presentation", true, new string[] {
-            ""})]
+    [AssociatedDetailViewAttribute("MeetingE", "Presentation", "PresentationE", true, "", "Presentation", true, new string[] { "" })]
     [View("MeetingL", new string[] {
             "Id as \'Id\'",
             "Date as \'Date\'"})]
+    [AssociatedDetailViewAttribute("MeetingL", "Presentation", "PresentationE", true, "", "Presentation", true, new string[] { "" })]
     public class Meeting : DataObject
     {
         private Guid fId;

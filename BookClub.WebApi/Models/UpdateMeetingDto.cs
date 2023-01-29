@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using BookClub.Application.Common.Mappings;
-using BookClub.Application.meetings.Commands;
 using BookClub.Application.Meetings.Commands;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BookClub.WebApi.Models
 {

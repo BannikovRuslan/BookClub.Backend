@@ -21,13 +21,24 @@ namespace BookClub.Application.Meetings.Commands
         public async Task<MeetingIdVm> Handle(DeleteMeetingCommand request, CancellationToken cancellationToken)
         {
             var ds = (SQLDataService)DataServiceProvider.DataService;
-            var entity = new Meeting();
+            var meeting = new Meeting();
             try
             {
-                entity.SetExistObjectPrimaryKey(request.Id);
-                ds.LoadObject(entity);
-                entity.SetStatus(ObjectStatus.Deleted);
-                ds.UpdateObject(entity);
+                meeting.SetExistObjectPrimaryKey(request.Id);
+                ds.LoadObject(meeting);
+                
+                var presentation = new Presentation();
+                foreach (var item in meeting.Presentation)
+                {
+                    presentation = item as Presentation;
+                    presentation.SetExistObjectPrimaryKey(presentation.Id);
+                    ds.LoadObject(presentation);
+                    presentation.SetStatus(ObjectStatus.Deleted);
+                    ds.UpdateObject(presentation);
+                }
+
+                meeting.SetStatus(ObjectStatus.Deleted);
+                ds.UpdateObject(meeting);
             }
             catch (Exception)
             {
@@ -35,7 +46,7 @@ namespace BookClub.Application.Meetings.Commands
                 throw;
             }
 
-            return _mapper.Map<MeetingIdVm>(entity);
+            return _mapper.Map<MeetingIdVm>(meeting);
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using BookClub.Application.Meetings.Quries;
 using BookClub.Application.Meetings.ViewModels;
-using BookClub.Application.Speakers.Commands;
-using BookClub.Application.Speakers.Queries;
-using BookClub.Application.Speakers.ViewModels;
+using BookClub.Application.Meetings.Commands;
+using BookClub.Domains;
 using BookClub.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookClub.WebApi.Controllers
@@ -23,11 +20,24 @@ namespace BookClub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<MeetingListVm>> GetAll()
         {
-            var searchText = Request.Query["q"].ToDate;
+            DateTime? dateString;
+            if (Request.Query["date"].Count > 0)
+            {
+                dateString = DateTime.Parse(Request.Query["date"].ToString());
+            }
+            else
+            {
+                dateString = null;
+            }
+
+            int limit = Request.Query["_limit"].Count > 0 ? int.Parse(Request.Query["_limit"]) : 0;
+            int page = Request.Query["_page"].Count > 0 ? int.Parse(Request.Query["_page"]) : 0;
 
             var query = new GetMeetingListQuery
             {
-                SearchDate = searchText
+                SearchDate = dateString,
+                limit= limit,
+                page = page
             };
 
             var vm = await Mediator.Send(query);
@@ -36,9 +46,9 @@ namespace BookClub.WebApi.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SpeakerDetailsVm>> Get(Guid id)
+        public async Task<ActionResult<MeetingDetailsVm>> Get(Guid id)
         {
-            var query = new GetSpeakerDetailsQuery
+            var query = new GetMeetingDetailsQuery
             {
                 Id = id
             };
@@ -48,17 +58,17 @@ namespace BookClub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody] CreateSpeakerDto createSpeakerDto)
+        public async Task<ActionResult<Meeting>> Create([FromBody] CreateMeetingDto createMeetingDto)
         {
-            var command = _mapper.Map<CreateSpeakerCommand>(createSpeakerDto);
-            var speaker = await Mediator.Send(command);
-            return Ok(speaker);
+            var command = _mapper.Map<CreateMeetingCommand>(createMeetingDto);
+            var meeting = await Mediator.Send(command);
+            return Ok(meeting);
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Update([FromBody] UpdateSpeakerDto updateSpeakerDto)
+        public async Task<IActionResult> Update([FromBody] UpdateMeetingDto updateMeetingDto)
         {
-            var command = _mapper.Map<UpdateSpeakerCommand>(updateSpeakerDto);
+            var command = _mapper.Map<UpdateMeetingCommand>(updateMeetingDto);
             var vm = await Mediator.Send(command);
             return Ok(vm);
         }
@@ -66,7 +76,7 @@ namespace BookClub.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var command = new DeleteSpeakerCommand
+            var command = new DeleteMeetingCommand
             {
                 Id = id
             };

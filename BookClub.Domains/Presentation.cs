@@ -24,8 +24,8 @@ namespace BookClub.Domains
             "Book.Title as \'Title\'"}, Hidden = new string[] {
             "Speaker.FirstName",
             "Book.Title"})]
-    [MasterViewDefineAttribute("PresentationE", "Speaker", LookupTypeEnum.Standard, "", "FirstName")]
-    [MasterViewDefineAttribute("PresentationE", "Book", LookupTypeEnum.Standard, "", "Title")]
+    [MasterViewDefineAttribute("PresentationE", "Speaker", LookupTypeEnum.Standard, "", "Id")]
+    [MasterViewDefineAttribute("PresentationE", "Book", LookupTypeEnum.Standard, "", "Id")]
     public class Presentation : DataObject
     {
         private Guid fId;

@@ -5,6 +5,7 @@ using BookClub.Application.Books.ViewModels;
 using BookClub.Application.Speakers.Commands;
 using BookClub.Application.Speakers.Queries;
 using BookClub.Application.Speakers.ViewModels;
+using BookClub.Domains;
 using BookClub.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -49,7 +50,7 @@ namespace BookClub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody] CreateSpeakerDto createSpeakerDto)
+        public async Task<ActionResult<Speaker>> Create([FromBody] CreateSpeakerDto createSpeakerDto)
         {
             var command = _mapper.Map<CreateSpeakerCommand>(createSpeakerDto);
             var speaker = await Mediator.Send(command);
